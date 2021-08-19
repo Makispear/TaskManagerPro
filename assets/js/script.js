@@ -144,7 +144,7 @@ $(this).children().each(function() {
   var text = $(this)
     .find("p")
     .text()
-    .trim();
+    .trim();  
   var date = $(this)
     .find("span")
     .text()
