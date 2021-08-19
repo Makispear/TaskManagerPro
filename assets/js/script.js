@@ -103,7 +103,7 @@ $("#task-form-modal").on("shown.bs.modal", function() {
 });
 
 // WHEN SAVE BTN IN MODAL WAS CLICKED
-$("#task-form-modal .btn-primary").click(function() {
+$("#task-form-modal .btn-save").click(function() {
   var taskText = $("#modalTaskDescription").val();
   var taskDate = $("#modalDueDate").val();
 
@@ -149,7 +149,7 @@ saveTasks();
   }
 });
 
-// FOR MAKING LIST DROPABLE (delted with a drag feature)
+// FOR MAKING LIST DROPABLE (deleted with a drag feature)
 $("#trash").droppable({
   accept: ".card .list-group-item",
   tolerance: "touch",
@@ -180,6 +180,13 @@ var auditTask = function(taskEl) {
     $(taskEl).addClass("list-group-item-warning");
   }
 };
+
+//  SAVE ITEMS AUTOMATICALLY EVERY HALF HOUR
+setInterval(function () {
+  $(".card .list-group-item").each(function(index, el) {
+    auditTask(el);
+  });
+}, (1000 * 60) * 3);
 
 // LOAD TASKS ON PAGE LOAD
 loadTasks();
