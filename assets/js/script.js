@@ -106,7 +106,6 @@ $("#task-form-modal").on("shown.bs.modal", function() {
 $("#task-form-modal .btn-save").click(function() {
   var taskText = $("#modalTaskDescription").val();
   var taskDate = $("#modalDueDate").val();
-
   if (taskText && taskDate) {
     createTask(taskText, taskDate, "toDo");
     $("#task-form-modal").modal("hide");
@@ -133,6 +132,20 @@ $(".card .list-group").sortable({
   scroll: false,
   tolerance: "pointer",
   helper: "clone",
+  activate: function() {
+    $(this).addClass("dropover");
+    $(".bottom-trash").addClass("bottom-trash-drag");
+  },
+  deactivate: function() {
+    $(this).removeClass("dropover")
+    $(".bottom-trash").removeClass("bottom-trash-drag")
+  },
+  over: function(event) {
+    $(event.target).addClass("dropover-active")
+  },
+  out: function(event) {
+    $(event.target).removeClass("dropover-active")
+  },
   update: function(event) {
 var tempArr = [];
 $(this).children().each(function() {
@@ -149,18 +162,18 @@ saveTasks();
   }
 });
 
-// FOR MAKING LIST DROPABLE (deleted with a drag feature)
+// FOR MAKING LIST DROPABLE 
 $("#trash").droppable({
   accept: ".card .list-group-item",
   tolerance: "touch",
-  drop: function(event, ui) {
+  drop: function(ui) {
     ui.draggable.remove();
   },
-  over: function(event, ui) {
-    console.log("over");
+  over: function() {
+    $(".bottom-trash").addClass("bottom-trash-active")
   },
-  out: function(event, ui) {
-    console.log("out");
+  out: function() {
+    $(".bottom-trash").removeClass("bottom-trash-active")
   }
 });
 
